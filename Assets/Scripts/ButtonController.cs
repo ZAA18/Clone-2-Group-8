@@ -22,7 +22,7 @@ public class ButtonController : MonoBehaviour
         keyToPress.action.Enable();
 
         keyToPress.action.performed += OnKeyPressed;
-        keyToPress.action.canceled -= OnKeyReleased;
+        keyToPress.action.canceled += OnKeyReleased;
 
     }
 
