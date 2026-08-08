@@ -8,7 +8,7 @@ public class NoteObject : MonoBehaviour
     public InputActionReference keyToPress;
 
 
-    private void OnEnable()
+  /*  private void OnEnable()
     {
         keyToPress.action.Enable();
     }
@@ -17,6 +17,7 @@ public class NoteObject : MonoBehaviour
     {
         keyToPress.action.Disable();
     }
+  */
 
     // Update is called once per frame
     /*void Update()
