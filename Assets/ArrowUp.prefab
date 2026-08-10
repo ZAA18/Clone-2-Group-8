@@ -158,7 +158,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 963fceedad45ca44ea34ee7d8adba733, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7660377, g: 0.70072997, b: 0.13152722, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d128ba07b1c72ed43ac7ad5c4e75a2f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArrowController
-  speed: 3
+  speed: 5
   targetY: 0
-  spawnDirection: 0
-  arrowType: 0
+  fromTop: 1
+  type: 0

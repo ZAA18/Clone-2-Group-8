@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d128ba07b1c72ed43ac7ad5c4e75a2f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArrowController
-  speed: 3
+  speed: 5
   targetY: 0
-  spawnDirection: 0
-  arrowType: 2
+  fromTop: 1
+  type: 0
