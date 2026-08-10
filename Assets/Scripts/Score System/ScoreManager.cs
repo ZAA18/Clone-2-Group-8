@@ -28,7 +28,7 @@ public class ScoreManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        Instance = this;
     }
 
     public void RegisterHit(HitJudgement judgement)

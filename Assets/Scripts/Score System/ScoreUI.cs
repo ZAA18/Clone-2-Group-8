@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ScoreUI : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class ScoreUI : MonoBehaviour
     [SerializeField] TMP_Text scoreText;
     [SerializeField] TMP_Text comboText;
     [SerializeField] TMP_Text accuracyText;
+    [SerializeField] Slider healthBar;
+
 
     private void Update()
     {
@@ -18,5 +21,10 @@ public class ScoreUI : MonoBehaviour
     {
         // F2 displays number with 2 decimals
         accuracyText.text = "Accuracy: " + accuracy.ToString("F2") + "%";
+    }
+
+    public void UpdateHealthBar(float health)
+    {
+       // healthBar.value = currentHealth;
     }
 }
