@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -116,12 +116,12 @@ TextureImporter:
       name: Slider_1_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 64
-        height: 16
+        x: 3
+        y: 11
+        width: 48
+        height: 1
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -134,11 +134,55 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Slider_1_1
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 5
+        width: 50
+        height: 3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be9703d4c5e9064468b28de06e3b99cf
+      internalID: -1737099717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slider_1_2
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 5
+        width: 3
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66707d1d592c89f4a90982ecd7964454
+      internalID: 1361765852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 28bb435315789a54b8dc280eb00c2894
     internalID: 0
     vertices: []
     indices: 
@@ -149,6 +193,8 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Slider_1_0: 3731564021163172892
+      Slider_1_1: -1737099717
+      Slider_1_2: 1361765852
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
