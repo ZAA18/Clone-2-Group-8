@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
             if (multiplierThresholds[currentMultiplier - 1] <= multiplierTracker)
             {
                 multiplierTracker++;
+                currentMultiplier++;
             }
 
         }
