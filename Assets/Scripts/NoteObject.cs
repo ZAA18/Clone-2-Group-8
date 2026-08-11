@@ -7,32 +7,6 @@ public class NoteObject : MonoBehaviour
 
     public InputActionReference keyToPress;
 
-
-  /*  private void OnEnable()
-    {
-        keyToPress.action.Enable();
-    }
-
-    private void OnDisable()
-    {
-        keyToPress.action.Disable();
-    }
-  */
-
-    // Update is called once per frame
-    /*void Update()
-    {
-        if (Input.GetKeyDown(keyToPress))
-        {
-            if ( canBePressed)
-            {
-                gameObject.SetActive(false);
-            }
-        }
-
-    }
-    */
-
     private void Update()
     {
         if (keyToPress.action.WasPressedThisFrame())
@@ -40,6 +14,9 @@ public class NoteObject : MonoBehaviour
             if (canBePressed)
             {
                 gameObject.SetActive(false);
+
+                //telling the game manager we hit the note
+                GameManager.instance.NoteHit();
             }
         }
     }
@@ -58,6 +35,7 @@ public class NoteObject : MonoBehaviour
         if (other.CompareTag("Activator"))
         {
             canBePressed = false;
+           GameManager.instance.NoteMissed();
         }
     }
 }
