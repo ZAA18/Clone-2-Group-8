@@ -41,6 +41,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "StartGame",
+                    "type": "Button",
+                    "id": "0a3b931f-3525-4175-a230-692c606818dd",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -85,6 +94,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f30dbda0-a1ef-4cd0-a8ae-fc28909810cf",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StartGame",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
