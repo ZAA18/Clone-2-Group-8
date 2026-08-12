@@ -13,14 +13,14 @@ public class Spawner : MonoBehaviour
     public float spawnInterval = 1.5f;
     public float speed = 3f;
 
-    private float centerY;
+    private float centerX;
 
-    private float topY = 4f;
-    private float bottomY = -4f;
+    private float leftX = -8f;
+    private float rightX = 8f;
 
     void Start()
     {
-        centerY = centerLine.position.y;
+        centerX = centerLine.position.x;
         StartCoroutine(SpawnSequence());
     }
 
@@ -28,82 +28,79 @@ public class Spawner : MonoBehaviour
     {
         while (true)
         {
-            // Randomly choose an arrow
             int randomArrow = Random.Range(0, 4);
 
-            // Randomly choose top or bottom
-            bool fromTop = Random.value > 0.5f;
+            bool fromLeft = Random.value > 0.5f;
 
             GameObject arrow = null;
-            float x = 0f;
+            float y = 0f;
 
-            // Choose the arrow and its lane
             switch (randomArrow)
             {
                 case 0:
                     arrow = upArrow;
-                    x = -3f;
+                    y = 3f;
                     break;
 
                 case 1:
                     arrow = downArrow;
-                    x = -1f;
+                    y = 1f;
                     break;
 
                 case 2:
                     arrow = leftArrow;
-                    x = 1f;
+                    y = -1f;
                     break;
 
                 case 3:
                     arrow = rightArrow;
-                    x = 3f;
+                    y = -3f;
                     break;
             }
 
-            if (fromTop)
+            if (fromLeft)
             {
-                SpawnFromTop(arrow, x);
+                SpawnFromLeft(arrow, y);
             }
             else
             {
-                SpawnFromBottom(arrow, x);
+                SpawnFromRight(arrow, y);
             }
 
             yield return new WaitForSeconds(spawnInterval);
         }
     }
 
-    void SpawnFromTop(GameObject prefab, float x)
+    void SpawnFromLeft(GameObject prefab, float y)
     {
         GameObject arrow = Instantiate(
             prefab,
-            new Vector3(x, topY, 0),
+            new Vector3(leftX, y, 0),
             Quaternion.identity
         );
 
         ArrowController c = arrow.GetComponent<ArrowController>();
 
         c.speed = speed;
-        c.targetY = centerY;
-        c.fromTop = true;
+        c.targetX = centerX;
+        c.fromLeft = true;
 
         RotateArrow(arrow, c.type);
     }
 
-    void SpawnFromBottom(GameObject prefab, float x)
+    void SpawnFromRight(GameObject prefab, float y)
     {
         GameObject arrow = Instantiate(
             prefab,
-            new Vector3(x, bottomY, 0),
+            new Vector3(rightX, y, 0),
             Quaternion.identity
         );
 
         ArrowController c = arrow.GetComponent<ArrowController>();
 
         c.speed = speed;
-        c.targetY = centerY;
-        c.fromTop = false;
+        c.targetX = centerX;
+        c.fromLeft = false;
 
         RotateArrow(arrow, c.type);
     }

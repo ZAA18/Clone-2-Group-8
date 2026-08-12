@@ -157,7 +157,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: dd25ad6aba8d92d4b8a7f72c45b7b84d, type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: ffc9fd6909add5a45ae31fdb793f3c14, type: 3}
   m_Color: {r: 0.6980392, g: 0.1333333, b: 0.1333333, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -180,6 +180,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArrowController
   speed: 5
-  targetY: 0
-  fromTop: 1
+  targetX: 0
+  fromLeft: 1
   type: 0
