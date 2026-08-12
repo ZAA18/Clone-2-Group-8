@@ -5,36 +5,58 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public AudioSource theMusic;
-
-    public bool startPlaying;
-
-    public BeatScroller theBS;
-
-    public InputActionReference startGame;
-
     public static GameManager instance;
 
-    public int currentScore;
-    public int scorePerNote = 100;
+    [Header("Game")]
+    public AudioSource theMusic;
+    public InputActionReference startGame;
 
-    //tagerting perfect score
-    public int scorePerGoodNote = 125;
-    public int scorePerPerfectNote = 150;
+    [Header("Spawner")]
+    public Spawner spawner;
 
-    public Text scoreText;
-    public Text multiText;
+    [Header("UI")]
+    public ScoreUI scoreUI;
 
-    public int currentMultiplier;
-    public int multiplierTracker;
-    public int[] multiplierThresholds;
+    public bool startPlaying;
+   // public BeatScroller theBS;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+
+    /* public int currentScore;
+     public int scorePerNote = 100;
+
+     //tagerting perfect score
+     public int scorePerGoodNote = 125;
+     public int scorePerPerfectNote = 150;
+
+     public Text scoreText;
+     public Text multiText;
+
+     public int currentMultiplier;
+     public int multiplierTracker;
+     public int[] multiplierThresholds; */
+
+    /*// Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         instance = this;
         scoreText.text = "Score: 0";
         currentMultiplier = 1;
+    }*/
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    private void OnEnable()
+    {
+        startGame.action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        startGame.action.Disable();
     }
 
     // Update is called once per frame
@@ -45,15 +67,13 @@ public class GameManager : MonoBehaviour
         {
             if (startGame.action.WasPressedThisFrame())
             {
-                startPlaying = true;
-                theBS.hasStarted = true;
-                theMusic.Play();
+               StartGame();
             }
 
         }
     }
 
-    public void NoteHit()
+   /* public void NoteHit()
     {
         Debug.Log("hit on time");
 
@@ -75,9 +95,9 @@ public class GameManager : MonoBehaviour
            // currentScore += scorePerNote;
             scoreText.text = "Score: " + currentScore;
         
-    }
+    } */
 
-    public void NormalHit()
+   /* public void NormalHit()
     {
         currentScore += scorePerNote * currentMultiplier;
         NoteHit();
@@ -104,5 +124,28 @@ public class GameManager : MonoBehaviour
         multiplierTracker = 0;
 
         multiText.text = "Multiplier: x" + currentMultiplier;
+    }
+   */
+
+    private void StartGame()
+    {
+        startPlaying = true;
+        theMusic.Play();
+
+        if (spawner != null)
+        {
+            spawner.StartSpawning();
+        }
+    }
+
+    public void RegisterJudgement(HitJudgement judgement)
+    {
+        ScoreManager.Instance.RegisterHit(judgement);
+
+        if (scoreUI != null)
+        {
+            scoreUI.ShowJudgement(judgement);
+        }
+
     }
 }

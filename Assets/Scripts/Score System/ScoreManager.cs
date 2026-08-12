@@ -66,4 +66,25 @@ public class ScoreManager : MonoBehaviour
             maxCombo = combo;
         }
     }
+
+    public float GetAccuracy()
+    {
+        int totalHits =
+            perfectHits +
+            goodHits +
+            okHits +
+            misses;
+
+        if (totalHits == 0)
+        {
+            return 100f;
+        }
+
+        float earnedPoints =
+            (perfectHits * 1f) +
+            (goodHits * 0.5f) +
+            (okHits * 0.2f);
+
+        return (earnedPoints / totalHits) * 100f;
+    }
 }

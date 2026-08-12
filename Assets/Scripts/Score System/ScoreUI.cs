@@ -28,14 +28,21 @@ public class ScoreUI : MonoBehaviour
 
     private void Update()
     {
-        scoreText.text = "Score: " + ScoreManager.Instance.score;
-        comboText.text = "Combo: x " + ScoreManager.Instance.combo;
-    }
+        if (ScoreManager.Instance == null)
+        {
+            return;
+        }
 
-    public void UpdateAccuracy(float accuracy)
-    {
-        // F2 displays number with 2 decimals
-        accuracyText.text = "Accuracy: " + accuracy.ToString("F2") + "%";
+        scoreText.text =
+            "Score: " + ScoreManager.Instance.score;
+
+        comboText.text =
+            "Combo: x " + ScoreManager.Instance.combo;
+
+        accuracyText.text =
+            "Accuracy: " +
+            ScoreManager.Instance.GetAccuracy().ToString("F2") +
+            "%";
     }
 
     public void UpdateHealthBar(float health)

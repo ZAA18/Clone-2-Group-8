@@ -7,13 +7,17 @@ public class ArrowController : MonoBehaviour
     public bool fromLeft = true;
     public ArrowType type = ArrowType.Up;
 
+    [Header("Judgement")]
+    public float missedDistance = 1f;
+    public bool hasBeenHit = false;
+
     void Update()
     {
         if (fromLeft)
         {
-            transform.Translate(Vector3.right * speed * Time.deltaTime);
+            transform.Translate(Vector3.right * speed * Time.deltaTime, Space.World);
 
-            if (transform.position.x >= targetX)
+           /* if (transform.position.x >= targetX)
             {
                 transform.position = new Vector3(
                     targetX,
@@ -22,13 +26,18 @@ public class ArrowController : MonoBehaviour
                 );
 
                 Destroy(gameObject);
+            } */
+
+            if (!hasBeenHit && transform.position.x > targetX + missedDistance)
+            {
+                Miss();
             }
         }
         else
         {
-            transform.Translate(Vector3.left * speed * Time.deltaTime);
+            transform.Translate(Vector3.left * speed * Time.deltaTime, Space.World);
 
-            if (transform.position.x <= targetX)
+           /* if (transform.position.x <= targetX)
             {
                 transform.position = new Vector3(
                     targetX,
@@ -38,7 +47,36 @@ public class ArrowController : MonoBehaviour
 
                 Destroy(gameObject);
             }
+           */
+
+            if (!hasBeenHit && transform.position.x < targetX - missedDistance)
+            {
+                Miss();
+            }
         }
+    }
+
+    public void Hit(HitJudgement judgement)
+    {
+        if (hasBeenHit)
+        {
+            return;
+        }
+        hasBeenHit = true;
+        GameManager.instance.RegisterJudgement(judgement);
+        Destroy(gameObject);
+    }
+
+    private void Miss()
+    {
+        if (hasBeenHit)
+        {
+            return;
+        }
+
+        hasBeenHit = true;
+        GameManager.instance.RegisterJudgement(HitJudgement.Miss);
+        Destroy(gameObject);
     }
 }
 

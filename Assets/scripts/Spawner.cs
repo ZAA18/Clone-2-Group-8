@@ -18,10 +18,21 @@ public class Spawner : MonoBehaviour
     private float leftX = -8f;
     private float rightX = 8f;
 
+    private Coroutine spawnCoroutine;
+
     void Start()
     {
         centerX = centerLine.position.x;
-        StartCoroutine(SpawnSequence());
+       // StartCoroutine(SpawnSequence());
+    }
+
+    public void StartSpawning()
+    {
+        if (spawnCoroutine == null)
+        {
+            spawnCoroutine =
+                StartCoroutine(SpawnSequence());
+        }
     }
 
     IEnumerator SpawnSequence()
@@ -90,6 +101,26 @@ public class Spawner : MonoBehaviour
 
     void SpawnFromRight(GameObject prefab, float y)
     {
+        /*GameObject arrow = Instantiate(
+            prefab,
+            new Vector3(rightX, y, 0),
+            Quaternion.identity
+        );
+
+        ArrowController c = arrow.GetComponent<ArrowController>();
+
+        c.speed = speed;
+        c.targetX = centerX;
+        c.fromLeft = false;
+
+        RotateArrow(arrow, c.type); */
+
+        if (prefab == null)
+        {
+            Debug.LogError("Spawner: prefab is missing in SpawnFromRight!");
+            return;
+        }
+
         GameObject arrow = Instantiate(
             prefab,
             new Vector3(rightX, y, 0),
@@ -97,6 +128,16 @@ public class Spawner : MonoBehaviour
         );
 
         ArrowController c = arrow.GetComponent<ArrowController>();
+
+        if (c == null)
+        {
+            Debug.LogError(
+                "ArrowController is missing from prefab: " + prefab.name
+            );
+
+            Destroy(arrow);
+            return;
+        }
 
         c.speed = speed;
         c.targetX = centerX;

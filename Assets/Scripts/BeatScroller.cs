@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class BeatScroller : MonoBehaviour
 {
 
-    public float beatTempo; //How fast the arrows are going to be falling
+   /* public float beatTempo; //How fast the arrows are going to be falling
 
     public bool hasStarted;
 
@@ -33,7 +33,7 @@ public class BeatScroller : MonoBehaviour
             }
         }
     }
-    */
+    
 
     void Update()
     {
@@ -59,5 +59,7 @@ public class BeatScroller : MonoBehaviour
     private void OnDisable ()
     {
         startGame.action.Disable();
-    }
-}
+    } 
+
+    */
+} 
