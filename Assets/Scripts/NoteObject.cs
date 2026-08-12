@@ -16,7 +16,31 @@ public class NoteObject : MonoBehaviour
                 gameObject.SetActive(false);
 
                 //telling the game manager we hit the note
-                GameManager.instance.NoteHit();
+                //GameManager.instance.NoteHit();
+
+                //checking for normal hit which is 0.25 on a line
+
+                if (Mathf.Abs(transform.position. y) > 0.25)
+                {
+                    Debug.Log("Normal hit");
+                    GameManager.instance.NormalHit();
+
+                } 
+                
+                else if (Mathf.Abs(transform.position.y) > 0.05f)
+                {
+                    Debug.Log("Goodhit");
+                    GameManager.instance.GoodHit();
+                }
+
+                else
+                {
+                    Debug.Log("Perfect");
+                    GameManager.instance.PerfectHit();
+                }
+
+                // we are at -0.25 we still want it to be normal
+
             }
         }
     }

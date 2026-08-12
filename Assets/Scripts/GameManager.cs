@@ -79,19 +79,21 @@ public class GameManager : MonoBehaviour
 
     public void NormalHit()
     {
+        currentScore += scorePerNote * currentMultiplier;
         NoteHit();
 
     }
 
     public void GoodHit()
     {
-        currentScore += scorePerNote * currentMultiplier;
+        currentScore += scorePerGoodNote * currentMultiplier;
         NoteHit();
     }
 
     public void PerfectHit()
     {
-
+        currentScore += scorePerPerfectNote * currentMultiplier;
+        NoteHit();
     }
 
     public void NoteMissed()
