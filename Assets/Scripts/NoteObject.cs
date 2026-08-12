@@ -7,6 +7,11 @@ public class NoteObject : MonoBehaviour
 
     public InputActionReference keyToPress;
 
+    // for hit system Display
+    public GameObject hitEffect, goodEffect, missEffect;
+
+
+
     private void Update()
     {
         if (keyToPress.action.WasPressedThisFrame())
