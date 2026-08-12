@@ -8,7 +8,7 @@ public class NoteObject : MonoBehaviour
     public InputActionReference keyToPress;
 
     // for hit system Display
-    public GameObject hitEffect, goodEffect, missEffect;
+    public GameObject hitEffect, goodEffect, perfectEffect, missEffect;
 
 
 
@@ -29,6 +29,7 @@ public class NoteObject : MonoBehaviour
                 {
                     Debug.Log("Normal hit");
                     GameManager.instance.NormalHit();
+                    Instantiate(hitEffect, transform.position, hitEffect.transform.rotation);
 
                 } 
                 
@@ -36,12 +37,14 @@ public class NoteObject : MonoBehaviour
                 {
                     Debug.Log("Goodhit");
                     GameManager.instance.GoodHit();
+                    Instantiate(goodEffect, transform.position, goodEffect.transform.rotation);
                 }
 
                 else
                 {
                     Debug.Log("Perfect");
                     GameManager.instance.PerfectHit();
+                    Instantiate(perfectEffect, transform.position, perfectEffect.transform.rotation);
                 }
 
                 // we are at -0.25 we still want it to be normal
@@ -65,6 +68,7 @@ public class NoteObject : MonoBehaviour
         {
             canBePressed = false;
            GameManager.instance.NoteMissed();
+            Instantiate(missEffect, transform.position, missEffect.transform.rotation);
         }
     }
 }
