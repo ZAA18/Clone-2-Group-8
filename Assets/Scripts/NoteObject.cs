@@ -71,17 +71,17 @@ public class NoteObject : MonoBehaviour
              }
          } */
 
-        if (!keyToPress.action.WasPressedThisFrame())
+        if (keyToPress.action.WasPressedThisFrame())
         {
-            return;
-        }
+            Debug.Log("KEY PRESSED: " + gameObject.name);
 
-        if (!canBePressed)
-        {
-            return;
-        }
+            if (canBePressed)
+            {
+                Debug.Log("KEY PRESSED WHILE IN ACTIVATOR");
 
-        JudgeHit();
+                JudgeHit();
+            }
+        }
     }
 
     private void JudgeHit()
@@ -107,11 +107,12 @@ public class NoteObject : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag ("Activator"))
+        if (other.CompareTag("Activator"))
         {
             canBePressed = true;
-        }
 
+            Debug.Log("ENTERED ACTIVATOR: " + gameObject.name);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -119,7 +120,9 @@ public class NoteObject : MonoBehaviour
         if (other.CompareTag("Activator"))
         {
             canBePressed = false;
+
+            Debug.Log("LEFT ACTIVATOR: " + gameObject.name);
         }
     }
-   
+
 }
