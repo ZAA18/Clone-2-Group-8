@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 1632587241256120408}
   - component: {fileID: 7166530283878557763}
   - component: {fileID: 1458320656450300166}
+  - component: {fileID: 7652832615848191395}
+  - component: {fileID: -7186737862786972503}
   m_Layer: 0
   m_Name: ArrowRight
   m_TagString: Untagged
@@ -155,7 +157,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 970d3a159d40215408a3bd27b6aeba39, type: 3}
   m_Color: {r: 0.4203132, g: 0.90188676, b: 0.4644343, a: 1}
@@ -180,6 +182,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArrowController
   speed: 5
-  targetY: 0
-  fromTop: 1
+  targetX: 0
+  fromLeft: 1
   type: 0
+--- !u!114 &7652832615848191395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1517109418425459772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f10aefd49b2bb74aa04dd690962387c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NoteObject
+  canBePressed: 0
+  keyToPress: {fileID: 1246069767476473508, guid: 594ade7a2558ea24481a56ccf63397e8, type: 3}
+  hitEffect: {fileID: 0}
+  goodEffect: {fileID: 0}
+  perfectEffect: {fileID: 0}
+  missEffect: {fileID: 0}
+--- !u!114 &-7186737862786972503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1517109418425459772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f10aefd49b2bb74aa04dd690962387c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NoteObject
+  canBePressed: 0
+  keyToPress: {fileID: 0}
+  hitEffect: {fileID: 0}
+  goodEffect: {fileID: 0}
+  perfectEffect: {fileID: 0}
+  missEffect: {fileID: 0}
