@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
     public int multiplierTracker;
     public int[] multiplierThresholds;
 
+    // The multipliertracker still has an issue... its not changing I am not sure of what i did
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
