@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour
 
     public bool startPlaying;
 
-    public BeatScroller theBS;
+  //  public BeatScroller theBS;
+    public Conductor conductor;
 
     public InputActionReference startGame;
 
@@ -48,12 +49,13 @@ public class GameManager : MonoBehaviour
             if (startGame.action.WasPressedThisFrame())
             {
                 startPlaying = true;
-                theBS.hasStarted = true;
-                theMusic.Play();
+                //  theBS.hasStarted = true;
+                conductor.StartSong();
             }
 
         }
     }
+
 
     public void NoteHit()
     {
@@ -65,16 +67,12 @@ public class GameManager : MonoBehaviour
 
             if (multiplierThresholds[currentMultiplier - 1] <= multiplierTracker)
             {
-                multiplierTracker++;
                 currentMultiplier++;
             }
 
         }
 
-         multiText.text = "Multiplier: x" + currentMultiplier;
-
-            //currentScore += scorePerNote * currentMultiplier;
-           // currentScore += scorePerNote;
+            multiText.text = "Multiplier: x" + currentMultiplier;
             scoreText.text = "Score: " + currentScore;
         
     }

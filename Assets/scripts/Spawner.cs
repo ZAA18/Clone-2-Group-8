@@ -26,15 +26,37 @@ public class Spawner : MonoBehaviour
 
     private float currentSpeed;
 
+    [Header("Rhythm")]
+    public Conductor conductor;
+    public float travelBeats = 4f;
+
     void Start()
     {
         centerX = centerLine.position.x;
         currentSpeed = speed; // Initialize with default speed
-        StartCoroutine(SpawnSequence());
-        StartCoroutine(ChangeSpeedRoutine()); // Start speed variation coroutine
+       // StartCoroutine(ChangeSpeedRoutine()); // Start speed variation coroutine
     }
 
-    IEnumerator SpawnSequence()
+    private void OnEnable()
+    {
+        Conductor.OnBeat += HandleBeat;
+    }
+
+    private void OnDisable()
+    {
+        Conductor.OnBeat -= HandleBeat;
+    }
+
+    private void HandleBeat(int beat)
+    {
+        Debug.Log("SPAWNER RECEIVED BEAT: " + beat);
+
+        int targetBeat = beat + Mathf.RoundToInt(travelBeats);
+
+        SpawnSingleArrow(targetBeat);
+    }
+
+   /* IEnumerator SpawnSequence()
     {
         while (true)
         {
@@ -59,9 +81,9 @@ public class Spawner : MonoBehaviour
             // Wait for the spawn interval before next wave
             yield return new WaitForSeconds(spawnInterval);
         }
-    }
+    }*/
 
-    void SpawnSingleArrow()
+    void SpawnSingleArrow(int targetBeat)
     {
         int randomArrow = Random.Range(0, 4);
 
@@ -95,11 +117,11 @@ public class Spawner : MonoBehaviour
 
         if (fromLeft)
         {
-            SpawnFromLeft(arrow, y);
+            SpawnFromLeft(arrow, y, targetBeat);
         }
         else
         {
-            SpawnFromRight(arrow, y);
+            SpawnFromRight(arrow, y, targetBeat);
         }
     }
 
@@ -119,7 +141,7 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    void SpawnFromLeft(GameObject prefab, float y)
+    void SpawnFromLeft(GameObject prefab, float y, int targetBeat)
     {
         GameObject arrow = Instantiate(
             prefab,
@@ -129,15 +151,23 @@ public class Spawner : MonoBehaviour
 
         ArrowController c = arrow.GetComponent<ArrowController>();
 
+        NoteObject note = arrow.GetComponent<NoteObject>();
+
+        note.conductor = conductor;
+        note.SetTargetHitTime(targetBeat * conductor.secondsPerBeat);
+
         // Use the current speed instead of the constant speed
-        c.speed = currentSpeed;
+        float travelTime = conductor.secondsPerBeat * travelBeats;
+        float distance = Mathf.Abs(centerX - leftX);
+
+        c.speed = distance / travelTime;
         c.targetX = centerX;
         c.fromLeft = true;
 
         RotateArrow(arrow, c.type);
     }
 
-    void SpawnFromRight(GameObject prefab, float y)
+    void SpawnFromRight(GameObject prefab, float y, int targetBeat)
     {
         GameObject arrow = Instantiate(
             prefab,
@@ -147,8 +177,16 @@ public class Spawner : MonoBehaviour
 
         ArrowController c = arrow.GetComponent<ArrowController>();
 
+        NoteObject note = arrow.GetComponent<NoteObject>();
+
+        note.conductor = conductor;
+        note.SetTargetHitTime(targetBeat * conductor.secondsPerBeat);
+
         // Use the current speed instead of the constant speed
-        c.speed = currentSpeed;
+        float travelTime = conductor.secondsPerBeat * travelBeats;
+        float distance = Mathf.Abs(rightX - centerX);
+
+        c.speed = distance / travelTime;
         c.targetX = centerX;
         c.fromLeft = false;
 

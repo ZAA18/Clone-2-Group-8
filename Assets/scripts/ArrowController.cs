@@ -62,8 +62,9 @@ public class ArrowController : MonoBehaviour
         {
             return;
         }
+
         hasBeenHit = true;
-        GameManager.instance.RegisterJudgement(judgement);
+
         Destroy(gameObject);
     }
 
@@ -75,7 +76,9 @@ public class ArrowController : MonoBehaviour
         }
 
         hasBeenHit = true;
-        GameManager.instance.RegisterJudgement(HitJudgement.Miss);
+
+        GameManager.instance.NoteMissed();
+
         Destroy(gameObject);
     }
 }
