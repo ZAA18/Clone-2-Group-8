@@ -18,56 +18,104 @@ public class Spawner : MonoBehaviour
     private float leftX = -8f;
     private float rightX = 8f;
 
+    // Speed variation parameters
+    public float minSpeed = 1.5f;
+    public float maxSpeed = 6f;
+    public float speedChangeInterval = 5f; // How often speed changes (in seconds)
+    public float fastSpeedThreshold = 4.5f; // Speed above this triggers double arrows
+
+    private float currentSpeed;
+
     void Start()
     {
         centerX = centerLine.position.x;
+        currentSpeed = speed; // Initialize with default speed
         StartCoroutine(SpawnSequence());
+        StartCoroutine(ChangeSpeedRoutine()); // Start speed variation coroutine
     }
 
     IEnumerator SpawnSequence()
     {
         while (true)
         {
-            int randomArrow = Random.Range(0, 4);
+            // Check if current speed is fast
+            bool isFastSpeed = currentSpeed >= fastSpeedThreshold;
 
-            bool fromLeft = Random.value > 0.5f;
+            // Determine how many arrows to spawn (1 or 2)
+            int arrowsToSpawn = isFastSpeed ? 2 : 1;
 
-            GameObject arrow = null;
-            float y = 0f;
-
-            switch (randomArrow)
+            for (int i = 0; i < arrowsToSpawn; i++)
             {
-                case 0:
-                    arrow = upArrow;
-                    y = 3f;
-                    break;
+                // Spawn an arrow
+                SpawnSingleArrow();
 
-                case 1:
-                    arrow = downArrow;
-                    y = 1f;
-                    break;
-
-                case 2:
-                    arrow = leftArrow;
-                    y = -1f;
-                    break;
-
-                case 3:
-                    arrow = rightArrow;
-                    y = -3f;
-                    break;
+                // If this is the first arrow and we're spawning 2, add a small delay
+                if (i == 0 && arrowsToSpawn == 2)
+                {
+                    yield return new WaitForSeconds(0.2f); // Small delay between arrows
+                }
             }
 
-            if (fromLeft)
-            {
-                SpawnFromLeft(arrow, y);
-            }
-            else
-            {
-                SpawnFromRight(arrow, y);
-            }
-
+            // Wait for the spawn interval before next wave
             yield return new WaitForSeconds(spawnInterval);
+        }
+    }
+
+    void SpawnSingleArrow()
+    {
+        int randomArrow = Random.Range(0, 4);
+
+        bool fromLeft = Random.value > 0.5f;
+
+        GameObject arrow = null;
+        float y = 0f;
+
+        switch (randomArrow)
+        {
+            case 0:
+                arrow = upArrow;
+                y = 3f;
+                break;
+
+            case 1:
+                arrow = downArrow;
+                y = 1f;
+                break;
+
+            case 2:
+                arrow = leftArrow;
+                y = -1f;
+                break;
+
+            case 3:
+                arrow = rightArrow;
+                y = -3f;
+                break;
+        }
+
+        if (fromLeft)
+        {
+            SpawnFromLeft(arrow, y);
+        }
+        else
+        {
+            SpawnFromRight(arrow, y);
+        }
+    }
+
+    // Coroutine to change speed randomly
+    IEnumerator ChangeSpeedRoutine()
+    {
+        while (true)
+        {
+            // Wait for the specified interval
+            yield return new WaitForSeconds(speedChangeInterval);
+
+            // Generate a random speed between min and max
+            currentSpeed = Random.Range(minSpeed, maxSpeed);
+
+            // Uncomment to see speed changes in console
+            Debug.Log($"Speed changed to: {currentSpeed} - Double arrows: {(currentSpeed >= fastSpeedThreshold ? "YES" : "NO")}");
         }
     }
 
@@ -81,7 +129,8 @@ public class Spawner : MonoBehaviour
 
         ArrowController c = arrow.GetComponent<ArrowController>();
 
-        c.speed = speed;
+        // Use the current speed instead of the constant speed
+        c.speed = currentSpeed;
         c.targetX = centerX;
         c.fromLeft = true;
 
@@ -98,7 +147,8 @@ public class Spawner : MonoBehaviour
 
         ArrowController c = arrow.GetComponent<ArrowController>();
 
-        c.speed = speed;
+        // Use the current speed instead of the constant speed
+        c.speed = currentSpeed;
         c.targetX = centerX;
         c.fromLeft = false;
 
