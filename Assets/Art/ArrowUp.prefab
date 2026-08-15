@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4433819314919220679}
   - component: {fileID: 5810127251468713118}
   - component: {fileID: 6221634608932982822}
+  - component: {fileID: -7713214367818416365}
   m_Layer: 0
   m_Name: ArrowUp
   m_TagString: Untagged
@@ -155,7 +156,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 963fceedad45ca44ea34ee7d8adba733, type: 3}
   m_Color: {r: 0.7660377, g: 0.70072997, b: 0.13152722, a: 1}
@@ -180,6 +181,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArrowController
   speed: 5
-  targetY: 0
-  fromTop: 1
+  targetX: 0
+  fromLeft: 1
   type: 0
+--- !u!114 &-7713214367818416365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2298705604295665538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f10aefd49b2bb74aa04dd690962387c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NoteObject
+  canBePressed: 0
+  keyToPress: {fileID: -6953403194763910231, guid: 594ade7a2558ea24481a56ccf63397e8, type: 3}
+  hitEffect: {fileID: 5149461606726092649, guid: c68fc98f88a89c44d9cc332a1261fe11, type: 3}
+  goodEffect: {fileID: 7218869612812368596, guid: 59b91f3a203e1a4469ce40d901235ea4, type: 3}
+  perfectEffect: {fileID: 8313118871144391701, guid: c7eb5dfa3e08b2e4da65644acd3c47ca, type: 3}
+  missEffect: {fileID: 7418459517354878867, guid: 5df9fbb250f90324aa44a6fe9e1afada, type: 3}

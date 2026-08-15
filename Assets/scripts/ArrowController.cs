@@ -5,7 +5,7 @@ public class ArrowController : MonoBehaviour
     public float speed = 3f;
     public float targetX = 0f;
     public bool fromLeft = true;
-    public ArrowType type = ArrowType.Up;
+    public ArrowType type;
 
     [Header("Judgement")]
     public float missedDistance = 1f;
