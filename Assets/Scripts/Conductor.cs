@@ -37,8 +37,14 @@ public class Conductor : MonoBehaviour
 
     public void StartSong()
     {
+        lastReportedBeat = -1;
+
+        songPosition = 0f;
+        songPositionInBeats = 0;
+
         songStartTime = AudioSettings.dspTime + 0.5f;
 
+        musicSource.Stop();
         musicSource.PlayScheduled(songStartTime);
     }
 

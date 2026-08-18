@@ -133,9 +133,56 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-        SceneManager.LoadScene(
-            SceneManager.GetActiveScene().buildIndex
+        // Hide results
+        resultsPanel.SetActive(false);
+
+        // Reset game state
+        gameOver = false;
+        startPlaying = false;
+
+        // Reset score
+        currentScore = 0;
+        scoreText.text = "Score: 0";
+
+        // Reset multiplier
+        currentMultiplier = 1;
+        multiplierTracker = 0;
+        multiText.text = "Multiplier: x1";
+
+        // Reset combo
+        currentCombo = 0;
+        maxCombo = 0;
+        comboText.text = "Combo: 0";
+
+        // Reset accuracy
+        totalNotesJudged = 0;
+        totalAccuracyPoints = 0f;
+        accuracyText.text = "Accuracy: 100.00%";
+
+        // Reset judgement counts
+        perfectCount = 0;
+        goodCount = 0;
+        okCount = 0;
+        missCount = 0;
+
+        // Reset health
+        currentHealth = maxHealth;
+        healthBar.value = currentHealth;
+
+        // Remove any arrows still on screen
+        ArrowController[] arrows = FindObjectsByType<ArrowController>(
+            FindObjectsSortMode.None
         );
+
+        foreach (ArrowController arrow in arrows)
+        {
+            Destroy(arrow.gameObject);
+        }
+
+        // Restart song
+        conductor.StartSong();
+
+        startPlaying = true;
     }
 
     private void CompleteSong()
