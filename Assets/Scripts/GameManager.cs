@@ -30,14 +30,30 @@ public class GameManager : MonoBehaviour
     public int multiplierTracker;
     public int[] multiplierThresholds;
 
+    [Header("Combo")]
+    public int currentCombo;
+    public Text comboText;
+
+    [Header("Accuracy")]
+    public int totalNotesJudged;
+    public float totalAccuracyPoints;
+    public Text accuracyText;
+
     // The multipliertracker still has an issue... its not changing I am not sure of what i did
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         instance = this;
+
         scoreText.text = "Score: 0";
+
         currentMultiplier = 1;
+        currentCombo = 0;
+
+        multiText.text = "Multiplier: x1";
+        comboText.text = "Combo: 0";
+        accuracyText.text = "Accuracy: 100.00%";
     }
 
     // Update is called once per frame
@@ -56,6 +72,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void UpdateAccuracy(float accuracyValue)
+    {
+        totalNotesJudged++;
+        totalAccuracyPoints += accuracyValue;
+
+        float accuracy = 0f;
+
+        if (totalNotesJudged > 0)
+        {
+            accuracy = (totalAccuracyPoints / totalNotesJudged) * 100f;
+        }
+
+        accuracyText.text = "Accuracy: " + accuracy.ToString("F2") + "%";
+    }
 
     public void NoteHit()
     {
@@ -80,19 +110,36 @@ public class GameManager : MonoBehaviour
     public void NormalHit()
     {
         currentScore += scorePerNote * currentMultiplier;
-        NoteHit();
 
+        currentCombo++;
+        comboText.text = "Combo: " + currentCombo;
+
+        UpdateAccuracy(0.50f);
+
+        NoteHit();
     }
 
     public void GoodHit()
     {
         currentScore += scorePerGoodNote * currentMultiplier;
+
+        currentCombo++;
+        comboText.text = "Combo: " + currentCombo;
+
+        UpdateAccuracy(0.75f);
+
         NoteHit();
     }
 
     public void PerfectHit()
     {
         currentScore += scorePerPerfectNote * currentMultiplier;
+
+        currentCombo++;
+        comboText.text = "Combo: " + currentCombo;
+
+        UpdateAccuracy(1.00f);
+
         NoteHit();
     }
 
@@ -103,6 +150,11 @@ public class GameManager : MonoBehaviour
         currentMultiplier = 1;
         multiplierTracker = 0;
 
+        currentCombo = 0;
+
         multiText.text = "Multiplier: x" + currentMultiplier;
+        comboText.text = "Combo: " + currentCombo;
+
+        UpdateAccuracy(0f);
     }
 }

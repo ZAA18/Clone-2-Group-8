@@ -64,6 +64,22 @@ public class ArrowController : MonoBehaviour
         }
 
         hasBeenHit = true;
+        Debug.Log("REGISTERING HIT: " + judgement);
+
+        switch (judgement)
+        {
+            case HitJudgement.Perfect:
+                GameManager.instance.PerfectHit();
+                break;
+
+            case HitJudgement.Good:
+                GameManager.instance.GoodHit();
+                break;
+
+            case HitJudgement.Ok:
+                GameManager.instance.NormalHit();
+                break;
+        }
 
         Destroy(gameObject);
     }
