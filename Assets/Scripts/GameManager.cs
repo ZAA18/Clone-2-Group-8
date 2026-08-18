@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -119,6 +120,22 @@ public class GameManager : MonoBehaviour
                 CompleteSong();
             }
         }
+    }
+
+    public void GoToMainMenu()
+    {
+        Time.timeScale = 1f;
+
+        SceneManager.LoadScene("Main Menu");
+    }
+
+    public void RetrySong()
+    {
+        Time.timeScale = 1f;
+
+        SceneManager.LoadScene(
+            SceneManager.GetActiveScene().buildIndex
+        );
     }
 
     private void CompleteSong()
