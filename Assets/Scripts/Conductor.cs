@@ -25,6 +25,16 @@ public class Conductor : MonoBehaviour
         secondsPerBeat = 60f / bpm;
     }
 
+    public bool IsSongPlaying()
+    {
+        return musicSource.isPlaying;
+    }
+
+    public void StopSong()
+    {
+        musicSource.Stop();
+    }
+
     public void StartSong()
     {
         songStartTime = AudioSettings.dspTime + 0.5f;

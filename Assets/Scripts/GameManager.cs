@@ -39,6 +39,42 @@ public class GameManager : MonoBehaviour
     public float totalAccuracyPoints;
     public Text accuracyText;
 
+    [Header("Health")]
+    public Slider healthBar;
+
+    public float maxHealth = 100f;
+    public float currentHealth = 100f;
+
+    public float perfectHealthGain = 2f;
+    public float goodHealthGain = 1f;
+    public float okHealthGain = 0.5f;
+
+    public float missHealthLoss = 10f;
+
+    private bool gameOver = false;
+
+    [Header("Results Screen")]
+    public GameObject resultsPanel;
+
+    public Text resultTitleText;
+    public Text finalScoreText;
+    public Text finalAccuracyText;
+    public Text finalComboText;
+    public Text rankText;
+
+    public int maxCombo;
+
+    [Header("Judgement Counts")]
+    public int perfectCount;
+    public int goodCount;
+    public int okCount;
+    public int missCount;
+
+    public Text resultPerfectText;
+    public Text resultGoodText;
+    public Text resultOkText;
+    public Text resultMissText;
+
     // The multipliertracker still has an issue... its not changing I am not sure of what i did
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -54,6 +90,11 @@ public class GameManager : MonoBehaviour
         multiText.text = "Multiplier: x1";
         comboText.text = "Combo: 0";
         accuracyText.text = "Accuracy: 100.00%";
+
+        currentHealth = maxHealth;
+
+        healthBar.maxValue = maxHealth;
+        healthBar.value = currentHealth;
     }
 
     // Update is called once per frame
@@ -69,6 +110,137 @@ public class GameManager : MonoBehaviour
                 conductor.StartSong();
             }
 
+        }
+
+        if (startPlaying && !gameOver)
+        {
+            if (!conductor.IsSongPlaying() && conductor.songPosition > 1f)
+            {
+                CompleteSong();
+            }
+        }
+    }
+
+    private void CompleteSong()
+    {
+        if (gameOver)
+            return;
+
+        gameOver = true;
+
+        Debug.Log("SONG COMPLETE");
+
+        ShowResults(false);
+
+        Time.timeScale = 0f;
+    }
+
+    private void ShowResults(bool failed)
+    {
+        float finalAccuracy = GetFinalAccuracy();
+        string finalRank = GetRank(finalAccuracy, failed);
+
+        resultsPanel.SetActive(true);
+
+        if (failed)
+        {
+            resultTitleText.text = "FAILED";
+        }
+        else
+        {
+            resultTitleText.text = "SONG COMPLETE";
+        }
+
+        finalScoreText.text = "Score: " + currentScore;
+        finalAccuracyText.text = "Accuracy: " + finalAccuracy.ToString("F2") + "%";
+        finalComboText.text = "Max Combo: " + maxCombo;
+        rankText.text = "Rank: " + finalRank;
+        resultPerfectText.text = "Perfect: " + perfectCount;
+        resultGoodText.text = "Good: " + goodCount;
+        resultOkText.text = "Ok: " + okCount;
+        resultMissText.text = "Miss: " + missCount;
+    }
+    private string GetRank(float accuracy, bool failed)
+    {
+        if (failed)
+            return "F";
+
+        if (accuracy >= 95f)
+            return "S";
+
+        if (accuracy >= 90f)
+            return "A";
+
+        if (accuracy >= 80f)
+            return "B";
+
+        if (accuracy >= 70f)
+            return "C";
+
+        if (accuracy >= 60f)
+            return "D";
+
+        return "F";
+    }
+
+    private float GetFinalAccuracy()
+    {
+        if (totalNotesJudged <= 0)
+            return 0f;
+
+        return (totalAccuracyPoints / totalNotesJudged) * 100f;
+    }
+
+    private void FailSong()
+    {
+        if (gameOver)
+            return;
+
+        gameOver = true;
+
+        Debug.Log("SONG FAILED");
+
+        conductor.StopSong();
+
+        ShowResults(true);
+
+        Time.timeScale = 0f;
+    }
+
+    private void GainHealth(float amount)
+    {
+        if (gameOver)
+            return;
+
+        currentHealth += amount;
+
+        currentHealth = Mathf.Clamp(
+            currentHealth,
+            0f,
+            maxHealth
+        );
+
+        healthBar.value = currentHealth;
+    }
+
+    private void LoseHealth(float amount)
+    {
+        if (gameOver)
+            return;
+
+        currentHealth -= amount;
+
+        currentHealth = Mathf.Clamp(
+            currentHealth,
+            0f,
+            maxHealth
+        );
+
+        healthBar.value = currentHealth;
+
+        if (currentHealth <= 0f)
+        {
+            FailSong();
         }
     }
 
@@ -111,10 +283,18 @@ public class GameManager : MonoBehaviour
     {
         currentScore += scorePerNote * currentMultiplier;
 
-        currentCombo++;
+        okCount++;
+        if (currentCombo > maxCombo)
+        {
+            maxCombo = currentCombo;
+        }
+
         comboText.text = "Combo: " + currentCombo;
 
         UpdateAccuracy(0.50f);
+
+        GainHealth(okHealthGain);
+
 
         NoteHit();
     }
@@ -123,10 +303,18 @@ public class GameManager : MonoBehaviour
     {
         currentScore += scorePerGoodNote * currentMultiplier;
 
-        currentCombo++;
+        goodCount++;
+
+        if (currentCombo > maxCombo)
+        {
+            maxCombo = currentCombo;
+        }
+
         comboText.text = "Combo: " + currentCombo;
 
         UpdateAccuracy(0.75f);
+
+        GainHealth(goodHealthGain);
 
         NoteHit();
     }
@@ -135,10 +323,19 @@ public class GameManager : MonoBehaviour
     {
         currentScore += scorePerPerfectNote * currentMultiplier;
 
-        currentCombo++;
+
+        perfectCount++;
+
+        if (currentCombo > maxCombo)
+        {
+            maxCombo = currentCombo;
+        }
+
         comboText.text = "Combo: " + currentCombo;
 
         UpdateAccuracy(1.00f);
+
+        GainHealth(perfectHealthGain);
 
         NoteHit();
     }
@@ -156,5 +353,9 @@ public class GameManager : MonoBehaviour
         comboText.text = "Combo: " + currentCombo;
 
         UpdateAccuracy(0f);
+
+        LoseHealth(missHealthLoss);
+
+        missCount++;
     }
 }
