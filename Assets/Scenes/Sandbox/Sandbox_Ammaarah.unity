@@ -474,7 +474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Conductor
   musicSource: {fileID: 1954948603}
   bpm: 120
-  beatsPerMeasure: 4
+  beatsPerMeasure: 6
   secondsPerBeat: 0
   songPosition: 0
   songPositionInBeats: 0

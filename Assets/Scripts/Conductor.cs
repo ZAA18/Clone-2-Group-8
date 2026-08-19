@@ -8,7 +8,7 @@ public class Conductor : MonoBehaviour
 
     [Header("Song Settings")]
     public float bpm = 120f;
-    public int beatsPerMeasure = 4;
+    public int beatsPerMeasure = 6;
 
     [Header("Runtime Info")]
     public float secondsPerBeat;
