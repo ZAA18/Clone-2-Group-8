@@ -76,6 +76,9 @@ public class GameManager : MonoBehaviour
     public Text resultOkText;
     public Text resultMissText;
 
+    [Header("Hide On Results")]
+    public GameObject objectToHide;
+
     // The multipliertracker still has an issue... its not changing I am not sure of what i did
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -121,6 +124,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
 
     public void GoToMainMenu()
     {
@@ -205,6 +209,7 @@ public class GameManager : MonoBehaviour
         string finalRank = GetRank(finalAccuracy, failed);
 
         resultsPanel.SetActive(true);
+        objectToHide.SetActive(false);
 
         if (failed)
         {
@@ -345,9 +350,12 @@ public class GameManager : MonoBehaviour
 
     public void NormalHit()
     {
+        okCount++;
+
         currentScore += scorePerNote * currentMultiplier;
 
-        okCount++;
+        currentCombo++;
+
         if (currentCombo > maxCombo)
         {
             maxCombo = currentCombo;
@@ -356,18 +364,18 @@ public class GameManager : MonoBehaviour
         comboText.text = "Combo: " + currentCombo;
 
         UpdateAccuracy(0.50f);
-
         GainHealth(okHealthGain);
-
 
         NoteHit();
     }
 
     public void GoodHit()
     {
+        goodCount++;
+
         currentScore += scorePerGoodNote * currentMultiplier;
 
-        goodCount++;
+        currentCombo++;
 
         if (currentCombo > maxCombo)
         {
@@ -377,18 +385,19 @@ public class GameManager : MonoBehaviour
         comboText.text = "Combo: " + currentCombo;
 
         UpdateAccuracy(0.75f);
-
         GainHealth(goodHealthGain);
 
         NoteHit();
     }
 
+
     public void PerfectHit()
     {
+        perfectCount++;
+
         currentScore += scorePerPerfectNote * currentMultiplier;
 
-
-        perfectCount++;
+        currentCombo++;
 
         if (currentCombo > maxCombo)
         {
@@ -398,7 +407,6 @@ public class GameManager : MonoBehaviour
         comboText.text = "Combo: " + currentCombo;
 
         UpdateAccuracy(1.00f);
-
         GainHealth(perfectHealthGain);
 
         NoteHit();
@@ -406,20 +414,17 @@ public class GameManager : MonoBehaviour
 
     public void NoteMissed()
     {
-        Debug.Log("Missed Note");
+        missCount++;
 
         currentMultiplier = 1;
         multiplierTracker = 0;
 
         currentCombo = 0;
 
-        multiText.text = "Multiplier: x" + currentMultiplier;
-        comboText.text = "Combo: " + currentCombo;
+        multiText.text = "Multiplier: x1";
+        comboText.text = "Combo: 0";
 
         UpdateAccuracy(0f);
-
         LoseHealth(missHealthLoss);
-
-        missCount++;
     }
 }

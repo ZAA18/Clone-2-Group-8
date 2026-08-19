@@ -4,6 +4,12 @@ using UnityEngine.InputSystem;
 public class JudgementLineFeedback : MonoBehaviour
 {
 
+    public InputActionReference inputAction;
+
+    public float pressedScale = 0.9f;
+
+    private Vector3 normalScale;
+
     [Header("Judgement Popup")]
     public GameObject judgementPopupPrefab;
     public Transform judgementSpawnPoint;
@@ -12,19 +18,10 @@ public class JudgementLineFeedback : MonoBehaviour
     public Sprite goodSprite;
     public Sprite okSprite;
 
-    public InputActionReference inputAction;
-
-    public float pressedScale = 0.9f;
-
-    private Vector3 normalScale;
-   
-
-
     private void Awake()
     {
         normalScale = transform.localScale;
     }
-
 
     private void OnEnable()
     {
@@ -32,12 +29,22 @@ public class JudgementLineFeedback : MonoBehaviour
         inputAction.action.canceled += OnReleased;
     }
 
-
     private void OnDisable()
     {
         inputAction.action.started -= OnPressed;
         inputAction.action.canceled -= OnReleased;
     }
+
+    private void OnPressed(InputAction.CallbackContext context)
+    {
+        transform.localScale = normalScale * pressedScale;
+    }
+
+    private void OnReleased(InputAction.CallbackContext context)
+    {
+        transform.localScale = normalScale;
+    }
+
     public void ShowJudgement(HitJudgement judgement)
     {
         GameObject popup = Instantiate(
@@ -63,16 +70,5 @@ public class JudgementLineFeedback : MonoBehaviour
                 popupScript.SetSprite(okSprite);
                 break;
         }
-    }
-
-    private void OnPressed(InputAction.CallbackContext context)
-    {
-        transform.localScale = normalScale * pressedScale;
-    }
-
-
-    private void OnReleased(InputAction.CallbackContext context)
-    {
-        transform.localScale = normalScale;
     }
 }

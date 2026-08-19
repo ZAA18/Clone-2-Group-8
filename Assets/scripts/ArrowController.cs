@@ -80,7 +80,6 @@ public class ArrowController : MonoBehaviour
                 GameManager.instance.NormalHit();
                 break;
         }
-
         Destroy(gameObject);
     }
 
